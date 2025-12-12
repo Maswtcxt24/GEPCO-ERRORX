@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GEPCO Bill Checker</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      text-align: center;
+      padding: 30px;
+    }
+    .box {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      width: 350px;
+      margin: auto;
+      box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #aaa;
+    }
+    button {
+      margin-top: 15px;
+      width: 95%;
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background: #2b7cff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1a5cd8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>GEPCO Bill Checker</h2>
+
+  <div class="box">
+    <p>Apna Reference Number enter karein:</p>
+
+    <input type="text" id="ref" placeholder="14 digit reference number">
+
+    <button onclick="checkBill()">Check Bill</button>
+  </div>
+
+  <script>
+    function checkBill() {
+      let ref = document.getElementById("ref").value.trim();
+
+      if (ref.length < 14) {
+        alert("Reference Number 14 digits ka hota hai!");
+        return;
+      }
+
+      let url = "https://bill.pitc.com.pk/gepco/" + ref;
+
+      window.open(url, "_blank");
+    }
+  </script>
+
+</body>
+</html>
