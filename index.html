@@ -1,75 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GEPCO Bill Checker</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f3f3f3;
-      text-align: center;
-      padding: 30px;
-    }
-    .box {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      width: 350px;
-      margin: auto;
-      box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
-    }
-    input {
-      width: 90%;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #aaa;
-    }
-    button {
-      margin-top: 15px;
-      width: 95%;
-      padding: 12px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      background: #2b7cff;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #1a5cd8;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ErrorX Bill Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; font-family: 'Roboto', sans-serif; }
+  body {
+    background: linear-gradient(135deg, #f3f3f3, #e0e0e0);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  .container {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    text-align: center;
+  }
+  h1 {
+    margin-bottom: 15px;
+    color: #2b7cff;
+  }
+  select, input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    font-size: 16px;
+  }
+  button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background: #2b7cff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover { background: #1a5cd8; }
+  .logo {
+    margin: 15px 0;
+  }
+  .logo img {
+    height: 50px;
+    object-fit: contain;
+  }
+  footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+  }
+</style>
 </head>
-
 <body>
 
-  <h2>GEPCO Bill Checker</h2>
-
-  <div class="box">
-    <p>Apna Reference Number enter karein:</p>
-
-    <input type="text" id="ref" placeholder="14 digit reference number">
-
-    <button onclick="checkBill()">Check Bill</button>
+<div class="container">
+  <div class="logo">
+    <img id="companyLogo" src="" alt="Company Logo" style="display:none;">
   </div>
+  <h1>Bill Checker</h1>
 
-  <script>
-    function checkBill() {
-      let ref = document.getElementById("ref").value.trim();
+  <select id="company" onchange="showLogo()">
+    <option value="" disabled selected>Select Company</option>
+    <option value="gepco">GEPCO</option>
+    <option value="fesco">FESCO</option>
+    <option value="lesco">LESCO</option>
+    <option value="mepco">MEPCO</option>
+    <option value="hepco">HEPCO</option>
+  </select>
 
-      if (ref.length < 14) {
-        alert("Reference Number 14 digits ka hota hai!");
-        return;
-      }
+  <input type="text" id="ref" placeholder="Enter Reference Number">
 
-      let url = "https://bill.pitc.com.pk/gepco/" + ref;
+  <button onclick="checkBill()">Check Bill</button>
 
-      window.open(url, "_blank");
-    }
-  </script>
+  <footer>Made by Abdullah Suleman</footer>
+</div>
+
+<script>
+const logos = {
+  gepco: "https://upload.wikimedia.org/wikipedia/en/thumb/3/30/GEPCO_Logo.svg/1200px-GEPCO_Logo.svg.png",
+  fesco: "https://upload.wikimedia.org/wikipedia/en/1/1b/FESCO_Logo.png",
+  lesco: "https://upload.wikimedia.org/wikipedia/en/6/6c/LESCO_Logo.png",
+  mepco: "https://upload.wikimedia.org/wikipedia/en/8/83/MEPCO_Logo.png",
+  hepco: "https://upload.wikimedia.org/wikipedia/en/4/41/HEPCO_Logo.png"
+};
+
+function showLogo() {
+  const company = document.getElementById("company").value;
+  const logoImg = document.getElementById("companyLogo");
+  if (logos[company]) {
+    logoImg.src = logos[company];
+    logoImg.style.display = "block";
+  } else {
+    logoImg.style.display = "none";
+  }
+}
+
+function checkBill() {
+  const ref = document.getElementById("ref").value.trim();
+  const company = document.getElementById("company").value;
+
+  if (!company) { alert("Please select a company!"); return; }
+  if (ref.length < 10) { alert("Reference Number is too short!"); return; }
+
+  const urls = {
+    gepco: "https://bill.pitc.com.pk/gepco/",
+    fesco: "https://bill.pitc.com.pk/fesco/",
+    lesco: "https://bill.pitc.com.pk/lesco/",
+    mepco: "https://bill.pitc.com.pk/mepco/",
+    hepco: "https://bill.pitc.com.pk/hepco/"
+  };
+
+  const billUrl = urls[company] + ref;
+
+  // Open bill page
+  window.open(billUrl, "_blank");
+
+  // Optional: Show alert for download
+  alert("Bill page opened! Use the official page to download the PDF.");
+}
+</script>
 
 </body>
 </html>
