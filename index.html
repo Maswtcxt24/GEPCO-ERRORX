@@ -88,47 +88,29 @@
 </div>
 
 <script>
-const logos = {
-  gepco: "gepco.jpg",
-  fesco: "fescoLogo.png",
-  lesco: "lesco.jpg",
-  mepco: "unnamed.png",
-  hepco: "hepco.jpg"
-};
-
-function showLogo() {
-  const company = document.getElementById("company").value;
-  const logoImg = document.getElementById("companyLogo");
-  if (logos[company]) {
-    logoImg.src = logos[company];
-    logoImg.style.display = "block";
-  } else {
-    logoImg.style.display = "none";
-  }
-}
-
 function checkBill() {
   const ref = document.getElementById("ref").value.trim();
   const company = document.getElementById("company").value;
 
-  if (!company) { alert("Please select a company!"); return; }
-  if (ref.length < 10) { alert("Reference Number is too short!"); return; }
+  if (!company) {
+    alert("Company select karo!");
+    return;
+  }
+  if (ref.length < 14) {
+    alert("Reference number 14 digits ka hota hai!");
+    return;
+  }
 
   const urls = {
-    gepco: "https://bill.pitc.com.pk/gepco/",
-    fesco: "https://bill.pitc.com.pk/fesco/",
-    lesco: "https://bill.pitc.com.pk/lesco/",
-    mepco: "https://bill.pitc.com.pk/mepco/",
-    hepco: "https://bill.pitc.com.pk/hepco/"
+    gepco: "https://bill.pitc.com.pk/gepco?refno=",
+    fesco: "https://bill.pitc.com.pk/fesco?refno=",
+    lesco: "https://bill.pitc.com.pk/lesco?refno=",
+    mepco: "https://bill.pitc.com.pk/mepco?refno=",
+    hepco: "https://bill.pitc.com.pk/hepco?refno="
   };
 
   const billUrl = urls[company] + ref;
-
-  // Open bill page
   window.open(billUrl, "_blank");
-
-  // Optional: Show alert for download
-  alert("Bill page opened! Use the official page to download the PDF.");
 }
 </script>
 
