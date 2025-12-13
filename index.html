@@ -88,8 +88,7 @@
 </div>
 
 <script>
-function checkBill() {
-  const ref = document.getElementById("ref").value.trim();
+ function checkBill() {
   const company = document.getElementById("company").value;
 
   if (!company) {
@@ -97,33 +96,19 @@ function checkBill() {
     return;
   }
 
-  if (!/^[0-9]{14}$/.test(ref)) {
-    alert("Reference number 14 digits ka hona chahiye");
-    return;
-  }
-
-  const form = document.createElement("form");
-  form.method = "POST";
-  form.target = "_blank";
-
-  const urls = {
+  const pages = {
     gepco: "https://bill.pitc.com.pk/gepco",
     fesco: "https://bill.pitc.com.pk/fesco",
     lesco: "https://bill.pitc.com.pk/lesco",
     mepco: "https://bill.pitc.com.pk/mepco"
   };
 
-  form.action = urls[company];
+  window.open(pages[company], "_blank");
 
-  const input = document.createElement("input");
-  input.type = "hidden";
-  input.name = "refno";
-  input.value = ref;
-
-  form.appendChild(input);
-  document.body.appendChild(form);
-  form.submit();
-  document.body.removeChild(form);
+  alert(
+    "Official bill page open ho gayi hai.\n" +
+    "Ab apna Reference Number wahan paste karein aur Bill Download karein."
+  );
 }
 </script>
 
